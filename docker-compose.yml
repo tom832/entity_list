@@ -1,0 +1,18 @@
+services:
+  marimo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: entity-list:latest
+    container_name: entity-list
+    restart: unless-stopped
+    ports:
+      - "12718:12718"
+    environment:
+      - PORT=12718
+      - TOKEN_PASSWORD=${TOKEN_PASSWORD:-changeme}
+    env_file:
+      - .env
+    command: uv run marimo run main.py --host 0.0.0.0 --port ${PORT:-12718} --token-password=${TOKEN_PASSWORD}
+
+
